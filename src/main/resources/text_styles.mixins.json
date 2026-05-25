@@ -1,0 +1,12 @@
+{
+  "package": "com.github.razorplay01.text_styles.mixin",
+  "required": true,
+  "minVersion": "0.8",
+  "compatibilityLevel": "${java}",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixinextras": {"minVersion": "0.5.4"},
+  "mixins": ${common_array},
+  "client": ${client_array}
+}
