@@ -2,7 +2,7 @@ package com.github.razorplay01.text_styles;
 
 import com.github.razorplay01.text_styles.platform.Platform;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources./*? >= 1.21.11 {*/ Identifier /*?} else { */ /*ResourceLocation *//*?} */;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +18,7 @@ import com.github.razorplay01.text_styles.platform.fabric.FabricPlatform;
 public class ModTemplate {
 
 	public static final String MOD_ID = /*$ mod_id*/ "text_styles";
-	public static final String MOD_VERSION = /*$ mod_version*/ "1.1.0";
+	public static final String MOD_VERSION = /*$ mod_version*/ "1.2.1";
 	public static final String MOD_FRIENDLY_NAME = /*$ mod_name*/ "Text Styles";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
@@ -49,17 +49,17 @@ public class ModTemplate {
 		 *///?}
 	}
 
-	public static ResourceLocation id(String path) {
+	public static /*? >= 1.21.11 {*/ Identifier /*?} else { */ /*ResourceLocation *//*?} */ id(String path) {
 		//? > 1.19.2 {
-		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+		return /*? >= 1.21.11 {*/ Identifier /*?} else { */ /*ResourceLocation *//*?} */.fromNamespaceAndPath(MOD_ID, path);
 		 //?} <= 1.19.2 {
 		/*return new ResourceLocation(MOD_ID, path);
 		*///?}
 	}
 
-	public static ResourceLocation id(String namespace, String path) {
+	public static /*? >= 1.21.11 {*/ Identifier /*?} else { */ /*ResourceLocation *//*?} */ id(String namespace, String path) {
 		//? > 1.19.2 {
-		return ResourceLocation.fromNamespaceAndPath(namespace, path);
+		return /*? >= 1.21.11 {*/ Identifier /*?} else { */ /*ResourceLocation *//*?} */.fromNamespaceAndPath(namespace, path);
 		 //?} <= 1.19.2 {
 		/*return new ResourceLocation(namespace, path);
 		*///?}

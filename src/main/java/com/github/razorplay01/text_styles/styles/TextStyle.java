@@ -10,13 +10,6 @@ import java.util.Map;
  */
 public abstract class TextStyle {
 
-    /**
-     * Creates an instance of this style from a parameter map.
-     * Used when parsing tags like <wobble speed=2>.
-     *
-     * @param params A map of parameter names to their string values.
-     * @return A new instance of this style with the given parameters.
-     */
     public abstract TextStyleInstance createInstance(Map<String, String> params);
 
     /**

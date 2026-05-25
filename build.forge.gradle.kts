@@ -6,15 +6,6 @@ plugins {
 stonecutter {
 	val (version, loader) = current.project.split('-', limit = 2)
 	properties.tags(version, loader)
-
-	replacements.string(current.parsed >= "1.21.11") {
-		replace("ResourceLocation", "Identifier")
-		replace("location()", "identifier()")
-	}
-	replacements.string(current.parsed < "1.21.11") {
-		replace("Identifier", "ResourceLocation")
-		replace("identifier()", "location()")
-	}
 }
 
 platform {

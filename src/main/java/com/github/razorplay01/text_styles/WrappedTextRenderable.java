@@ -2,7 +2,7 @@ package com.github.razorplay01.text_styles;
 
 //? >1.21.1{
 
-/*import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.textures.GpuTextureView;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.gui.Font;
@@ -68,4 +68,4 @@ public class WrappedTextRenderable implements TextRenderable.Styled {
         return delegate.style();
     }
 }
-*///? }
+//? }

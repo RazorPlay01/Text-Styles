@@ -7,7 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.contents.PlainTextContents;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources./*? >= 1.21.11 {*/ Identifier /*?} else { */ /*ResourceLocation *//*?} */;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -16,9 +16,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Parses text with tags like <wobble distance=3> into Components with styles.
- */
 @SuppressWarnings("unused")
 public final class TextStyleParser {
     private TextStyleParser() {
@@ -134,15 +131,15 @@ public final class TextStyleParser {
             }
         }
 
-        ResourceLocation id = ModTemplate.id(name);
+		/*? >= 1.21.11 {*/ Identifier /*?} else { */ /*ResourceLocation *//*?} */ id = ModTemplate.id(name);
         //? >1.21.1{
-		/*TextStyle style = TextStyles.REGISTRY.get(id)
+		TextStyle style = TextStyles.REGISTRY.get(id)
                 .map(Holder.Reference::value)
                 .orElse(null);
-		*///?}
-		//? <=1.21.1{
-		TextStyle style = TextStyles.REGISTRY.get(id);
 		//?}
+		//? <=1.21.1{
+		/*TextStyle style = TextStyles.REGISTRY.get(id);
+		*///?}
 
         if (style != null) {
             return style.createInstance(params);
