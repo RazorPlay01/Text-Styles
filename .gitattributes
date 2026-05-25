@@ -9,3 +9,6 @@
 *.ogg           binary
 *.mp3           binary
 *.mp4           binary
+gradlew      text eol=lf
+gradlew.bat  text eol=crlf
+*.sh         text eol=lf
