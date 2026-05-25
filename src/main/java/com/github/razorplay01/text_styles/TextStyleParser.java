@@ -7,7 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.contents.PlainTextContents;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -134,10 +134,15 @@ public final class TextStyleParser {
             }
         }
 
-        Identifier id = ModTemplate.id(name);
-        TextStyle style = TextStyles.REGISTRY.get(id)
+        ResourceLocation id = ModTemplate.id(name);
+        //? >1.21.1{
+		/*TextStyle style = TextStyles.REGISTRY.get(id)
                 .map(Holder.Reference::value)
                 .orElse(null);
+		*///?}
+		//? <=1.21.1{
+		TextStyle style = TextStyles.REGISTRY.get(id);
+		//?}
 
         if (style != null) {
             return style.createInstance(params);

@@ -6,7 +6,7 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "mixinextras": {"minVersion": "0.5.4"},
+  "mixinextras": {"minVersion": "0.5.0"},
   "mixins": ${common_array},
   "client": ${client_array}
 }

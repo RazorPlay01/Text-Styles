@@ -2,7 +2,7 @@ package com.github.razorplay01.text_styles.platform.fabric;
 
 //? fabric {
 
-/*import com.github.razorplay01.text_styles.ModTemplate;
+import com.github.razorplay01.text_styles.ModTemplate;
 import com.github.razorplay01.text_styles.command.TextStylesCommand;
 import dev.kikugie.fletching_table.annotation.fabric.Entrypoint;
 import net.fabricmc.api.ModInitializer;
@@ -19,4 +19,4 @@ public class FabricEntrypoint implements ModInitializer {
 		});
 	}
 }
-*///?}
+//?}

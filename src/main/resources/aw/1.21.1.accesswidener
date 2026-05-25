@@ -1,3 +1,4 @@
 accessWidener v2 named
 
-accessible field net/minecraft/server/MinecraftServer pvp Z # sample_content
+accessible class net/minecraft/client/gui/Font$StringRenderOutput
+accessible method net/minecraft/network/chat/Style <init> (Lnet/minecraft/network/chat/TextColor;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Lnet/minecraft/network/chat/ClickEvent;Lnet/minecraft/network/chat/HoverEvent;Ljava/lang/String;Lnet/minecraft/resources/ResourceLocation;)V

@@ -17,14 +17,20 @@ import com.github.razorplay01.text_styles.styles.TurbulenceStyle;
 import com.github.razorplay01.text_styles.styles.TypewriterStyle;
 import com.github.razorplay01.text_styles.styles.WaveStyle;
 import com.github.razorplay01.text_styles.styles.WobbleStyle;
+import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Lifecycle;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.ExtraCodecs;
-import net.minecraft.util.Util;
+//? >=1.21.11 {
+/*import net.minecraft.util.Util;
+*///?}
+//? <1.21.11 {
+import net.minecraft.Util;
+//?}
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +47,7 @@ public final class TextStyles {
         /* This utility class should not be instantiated */
     }
 
-    public static final Identifier REGISTRY_ID = ModTemplate.id("text_styles");
+    public static final ResourceLocation REGISTRY_ID = ModTemplate.id("text_styles");
     public static final ResourceKey<Registry<TextStyle>> REGISTRY_KEY = ResourceKey.createRegistryKey(REGISTRY_ID);
     public static final Registry<TextStyle> REGISTRY = new MappedRegistry<>(REGISTRY_KEY, Lifecycle.stable());
 
@@ -58,7 +64,7 @@ public final class TextStyles {
     /**
      * Codec for a list of text style instances.
      */
-    public static final Codec<List<TextStyleInstance>> LIST_CODEC = ExtraCodecs.compactListCodec(CODEC);
+    public static final Codec<List<TextStyleInstance>> LIST_CODEC = /*? >1.21.3 >>+ '.'*//*ExtraCodecs.*/compactListCodec(CODEC);
 
     // Register built-in styles
     public static final TextStyle WOBBLE = register("wobble", new WobbleStyle());
@@ -81,9 +87,17 @@ public final class TextStyles {
         return Registry.register(REGISTRY, id(id), style);
     }
 
-    public static Identifier id(String path) {
+    public static ResourceLocation id(String path) {
         return ModTemplate.id(path);
     }
+
+	//? <=1.21.3 && >1.17.1 {
+	private static <E> Codec<List<E>> compactListCodec(Codec<E> codec) {
+		//noinspection SequencedCollectionMethodCanBeUsed
+		return Codec.either(codec.listOf(), codec)
+				.xmap(either -> either.map(list -> list, List::of), list -> list.size() == 1 ? Either.right(list.get(0)) : Either.left(list));
+	}
+	//? }
 
     /**
      * Utility to get the current time in milliseconds.

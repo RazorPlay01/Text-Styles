@@ -2,7 +2,7 @@ package com.github.razorplay01.text_styles.platform.neoforge;
 
 //? neoforge {
 
-import com.github.razorplay01.text_styles.ModTemplate;
+/*import com.github.razorplay01.text_styles.ModTemplate;
 import com.github.razorplay01.text_styles.command.TextStylesCommand;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
@@ -16,4 +16,4 @@ public class NeoforgeEntrypoint {
 		NeoForge.EVENT_BUS.addListener((RegisterCommandsEvent event) -> TextStylesCommand.register(event.getDispatcher(), event.getBuildContext()));
 	}
 }
-//?}
+*///?}

@@ -9,12 +9,9 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.network.chat.ClickEvent;
-import net.minecraft.network.chat.FontDescription;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
-import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -34,43 +31,48 @@ import java.util.Objects;
 public abstract class StyleMixin implements StyleExtension {
 
 	@Shadow
-	private static <T> Style checkEmptyAfterChange(Style newStyle, @Nullable T previous, @Nullable T next) {
+	private static <T> Style checkEmptyAfterChange(Style newStyle, T previous, T next) {
 		throw new UnsupportedOperationException("Implemented via mixin");
 	}
 
 	@Shadow
 	@Final
-	private @Nullable TextColor color;
+	/*? > 1.21.11 || <=1.16.5 >>*//*private*/ TextColor color;
+	//? >1.21.3 {
+	/*@Shadow
+	@Final
+	//? > 1.21.11 >>
+	/^private^/
+	@Nullable Integer shadowColor;
+	*///? }
 	@Shadow
 	@Final
-	private @Nullable Integer shadowColor;
+	/*? > 1.21.11 || <=1.16.5 >>*//*private*/ Boolean bold;
 	@Shadow
 	@Final
-	private @Nullable Boolean bold;
+	/*? > 1.21.11 || <=1.16.5 >>*//*private*/ Boolean italic;
 	@Shadow
 	@Final
-	private @Nullable Boolean italic;
+	/*? > 1.21.11 || <=1.16.5 >>*//*private*/ Boolean underlined;
 	@Shadow
 	@Final
-	private @Nullable Boolean underlined;
+	/*? > 1.21.11 || <=1.16.5 >>*//*private*/ Boolean strikethrough;
 	@Shadow
 	@Final
-	private @Nullable Boolean strikethrough;
+	/*? > 1.21.11 || <=1.16.5 >>*//*private*/ Boolean obfuscated;
 	@Shadow
 	@Final
-	private @Nullable Boolean obfuscated;
+	/*? > 1.21.11 || <=1.16.5 >>*//*private*/ ClickEvent clickEvent;
 	@Shadow
 	@Final
-	private @Nullable ClickEvent clickEvent;
+	/*? > 1.21.11 || <=1.16.5 >>*//*private*/ HoverEvent hoverEvent;
 	@Shadow
 	@Final
-	private @Nullable HoverEvent hoverEvent;
+	/*? > 1.21.11 || <=1.16.5 >>*//*private*/ String insertion;
+
 	@Shadow
 	@Final
-	private @Nullable String insertion;
-	@Shadow
-	@Final
-	private @Nullable FontDescription font;
+	/*? > 1.21.11 || <=1.16.5 >>*//*private*/ /*? >= 1.21.10 {*/ /*net.minecraft.network.chat.FontDescription*//*? } else {*/ net.minecraft.resources.ResourceLocation /*? }*/ font;
 	@Unique
 	private List<TextStyle.TextStyleInstance> textStyles = null;
 
@@ -91,8 +93,9 @@ public abstract class StyleMixin implements StyleExtension {
 		return original * 31 + Objects.hashCode(textStyles);
 	}
 
+
 	@Inject(method = "toString", at = @At(value = "INVOKE", target = "Ljava/lang/StringBuilder;append(Ljava/lang/String;)Ljava/lang/StringBuilder;"))
-	private void includeEffectsInToString(CallbackInfoReturnable<String> cir, @Local(name = "result") StringBuilder result) {
+	private void includeEffectsInToString(CallbackInfoReturnable<String> cir, @Local(/*? >= 26 {*/ /*name = "result"*//*? }*/) StringBuilder result) {
 		if (textStyles != null) {
 			if (result.length() > 1) {
 				result.append(',');
@@ -103,7 +106,7 @@ public abstract class StyleMixin implements StyleExtension {
 
 	@SuppressWarnings("DataFlowIssue")
 	@ModifyReturnValue(method = "applyTo", at = @At("TAIL"))
-	private Style includeEffectsInApplyTo(Style original, @Local(argsOnly = true, name = "other") Style other) {
+	private Style includeEffectsInApplyTo(Style original, @Local(argsOnly = true/*? >= 26 {*//*, name = "other" *//*? }*/) Style other) {
 		if (original != (Style) (Object) this) {
 			if (textStyles != null) {
 				((StyleMixin) (Object) original).setTextStyles(textStyles);
@@ -120,7 +123,7 @@ public abstract class StyleMixin implements StyleExtension {
 	}
 
 	@Override
-	public Style withStyle(TextStyle.@NonNull TextStyleInstance style) {
+	public Style withStyle(TextStyle.TextStyleInstance style) {
 		Style copy = copy();
 		List<TextStyle.TextStyleInstance> newStyles = textStyles != null ? new ArrayList<>(textStyles) : new ArrayList<>();
 		newStyles.add(style);
@@ -129,7 +132,7 @@ public abstract class StyleMixin implements StyleExtension {
 	}
 
 	@Override
-	public Style withStyles(@NonNull Collection<TextStyle.TextStyleInstance> styles) {
+	public Style withStyles(Collection<TextStyle.TextStyleInstance> styles) {
 		Style copy = copy();
 		((StyleMixin) (Object) copy).setTextStyles(styles);
 		return checkEmptyAfterChange(copy, this.textStyles, ((StyleExtension) (Object) copy).getStyles());
@@ -137,7 +140,7 @@ public abstract class StyleMixin implements StyleExtension {
 
 	@Unique
 	private Style copy() {
-		return new Style(this.color, this.shadowColor, this.bold, this.italic, this.underlined, this.strikethrough, this.obfuscated, this.clickEvent, this.hoverEvent, this.insertion, this.font);
+		return new Style(this.color, /*? >1.21.3 >>*//*this.shadowColor,*/ this.bold, this.italic, this.underlined, this.strikethrough, this.obfuscated, this.clickEvent, this.hoverEvent, this.insertion, this.font);
 	}
 
 	@ModifyReturnValue(method = {"applyFormats", "applyFormat", "applyLegacyFormat"}, at = @At("TAIL"))
@@ -150,7 +153,8 @@ public abstract class StyleMixin implements StyleExtension {
 			"withFont", "withBold", "withClickEvent", "withColor(I)Lnet/minecraft/network/chat/Style;",
 			"withColor(Lnet/minecraft/network/chat/TextColor;)Lnet/minecraft/network/chat/Style;",
 			"withColor(Lnet/minecraft/ChatFormatting;)Lnet/minecraft/network/chat/Style;",
-			"withHoverEvent", "withInsertion", "withItalic", "withObfuscated", "withShadowColor",
+			"withHoverEvent", "withInsertion", "withItalic", "withObfuscated",
+			/*? >1.21.3  >>*//*"withShadowColor",*/
 			"withStrikethrough", "withUnderlined"}, at = @At(value =
 			"INVOKE", target = "Lnet/minecraft/network/chat/Style;checkEmptyAfterChange(Lnet/minecraft/network/chat/Style;Ljava/lang/Object;Ljava/lang/Object;)Lnet/minecraft/network/chat/Style;"
 	))

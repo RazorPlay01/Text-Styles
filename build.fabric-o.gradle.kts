@@ -37,6 +37,22 @@ platform {
 	}
 }
 
+mixins {
+	common {
+		always(
+			"BuiltInRegistriesMixin",
+			"StyleMixin",
+			"StyleSerializerMixin",
+			"ComponentMixin"
+		)
+	}
+	client {
+		always(
+			"FontPreparedTextBuilderMixin"
+		)
+	}
+}
+
 loom {
 	accessWidenerPath = rootProject.file("src/main/resources/aw/${sc.current.version}.accesswidener")
 	runs.named("client") {

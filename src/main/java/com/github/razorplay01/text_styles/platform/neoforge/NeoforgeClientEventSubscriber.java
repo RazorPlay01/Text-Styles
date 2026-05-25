@@ -2,7 +2,7 @@ package com.github.razorplay01.text_styles.platform.neoforge;
 
 //? neoforge {
 
-import com.github.razorplay01.text_styles.ModTemplate;
+/*import com.github.razorplay01.text_styles.ModTemplate;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -15,4 +15,4 @@ public class NeoforgeClientEventSubscriber {
 		ModTemplate.onInitializeClient();
 	}
 }
-//?}
+*///?}

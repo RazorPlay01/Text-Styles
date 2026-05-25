@@ -1,10 +1,10 @@
 package com.github.razorplay01.text_styles.platform.fabric.datagen;
 
 //? fabric {
-/*import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
+import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 //? != 1.19.2 {
-import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 //?}
 
 public class FabricDataGeneratorEntrypoint implements DataGeneratorEntrypoint {
@@ -13,4 +13,4 @@ public class FabricDataGeneratorEntrypoint implements DataGeneratorEntrypoint {
 	public void onInitializeDataGenerator(FabricDataGenerator generator) {
 	}
 }
-*///?}
+//?}
