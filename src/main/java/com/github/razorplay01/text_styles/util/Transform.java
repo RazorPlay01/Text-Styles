@@ -52,10 +52,6 @@ public interface Transform {
             this.matrix = matrix;
             this.color = color;
         }
-		public TransformImpl(Matrix4f matrix) {
-			this.matrix = matrix;
-			this.color = 0xfffffff;
-		}
 
         @Override
         public void translate(float x, float y) {

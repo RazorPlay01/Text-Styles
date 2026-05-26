@@ -14,6 +14,8 @@ import net.minecraft.network.chat.Style;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Collection;
@@ -28,6 +30,27 @@ import net.minecraft.client.gui.font.TextRenderable;
 /*@Mixin(Font.StringRenderOutput.class)
 *///? }
 public abstract class FontPreparedTextBuilderMixin {
+
+	//? <=1.21.1 {
+	/*@Shadow
+	@Final
+	private boolean dropShadow;
+
+	private static int packColor(float r, float g, float b) {
+		int red = Math.round(clamp01(r) * 255.0f);
+		int green = Math.round(clamp01(g) * 255.0f);
+		int blue = Math.round(clamp01(b) * 255.0f);
+		return 0xFF000000 | (red << 16) | (green << 8) | blue;
+	}
+
+	private static float unpackChannel(int color, int shift) {
+		return ((color >> shift) & 0xFF) / 255.0f;
+	}
+
+	private static float clamp01(float value) {
+		return Math.max(0.0f, Math.min(1.0f, value));
+	}
+	*///? }
 
 	//? >= 1.21.11 {
     @WrapOperation(method = "accept(ILnet/minecraft/network/chat/Style;Lnet/minecraft/client/gui/font/glyphs/BakedGlyph;)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/font/glyphs/BakedGlyph;createGlyph(FFIILnet/minecraft/network/chat/Style;FF)Lnet/minecraft/client/gui/font/TextRenderable$Styled;"))
@@ -48,13 +71,18 @@ public abstract class FontPreparedTextBuilderMixin {
 		//?}
 
         if (textStyles != null && !textStyles.isEmpty()) {
+			//? <=1.21.1 {
+			/*float originalR = r;
+			float originalG = g;
+			float originalB = b;
+			*///? }
             boolean start = position == 0;
             transformMatrix = new Matrix4f();
 			//? >1.21.1{
             Transform.TransformImpl transform = new Transform.TransformImpl(transformMatrix ,textColor);
 			//?}
 			//? <=1.21.1{
-            /*Transform.TransformImpl transform = new Transform.TransformImpl(transformMatrix);
+            /*Transform.TransformImpl transform = new Transform.TransformImpl(transformMatrix, packColor(r, g, b));
 			*///?}
             for (TextStyle.TextStyleInstance effect : textStyles) {
                 if (effect.getHidden(start)) {
@@ -73,23 +101,36 @@ public abstract class FontPreparedTextBuilderMixin {
                 currentColor = (currentColor & 0xFFFFFF) | (s << 24);
             }
 			//?}
+			//? <=1.21.1{
+			/*int currentColor = transform.getColor();
+			if (dropShadow) {
+				r = originalR;
+				g = originalG;
+				b = originalB;
+			} else {
+				r = unpackChannel(currentColor, 16);
+				g = unpackChannel(currentColor, 8);
+				b = unpackChannel(currentColor, 0);
+			}
+			a = clamp01(a * transform.getAlpha());
+			*///?}
         }
 
 		//? > 1.21.8 {
 		TextRenderable/*? >1.21.10 >>*/.Styled org = original.call(instance, x, y, currentColor, shadowColor, style, boldOffset, shadowOffset);
 		return hide || org == null ? null : new com.github.razorplay01.text_styles.WrappedTextRenderable(org, transformMatrix);
 		 //? }
-		//? >1.14.4 && <1.21.1 {
+		//? >1.14.4 && <=1.21.1 {
 		/*if (!hide) {
 			//? >1.19.2 {
 			if (transformMatrix != null) {
 				matrix4f = transformMatrix.mul(matrix4f);
 			}
 			//? } else {
-			*//*bakedGlyph.text_effects$setTransform(transform);
-			 *//*//? }
+			//bakedGlyph.text_effects$setTransform(transform);
+			 //? }
 			original.call(instance, bakedGlyph, bold, italic, boldOffset, x, y, matrix4f, consumer, r, g, b, a, light);
-		}*/
-		//? }
+		}
+		*///? }
     }
 }
