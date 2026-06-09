@@ -1,263 +1,100 @@
-# Stonecutter Mod Template
+# Text Styles
 
-A multi-platform Minecraft mod template for **Fabric**, **NeoForge**, and **Forge**,
-using [Stonecutter](https://stonecutter.kikugie.dev/) for
-multiversion and multiloader code.
-This is the Java-only version adapted from KikuGie's Elytra Trims
-rewrite following major Stonecutter feature updates.
+**"Bring your text to life with dynamic animations and effects!"**
 
-This template is as "batteries included" as possible.
-If you don't like this, it's not the right template for
-you ([Alternative Templates](https://stonecutter.kikugie.dev/wiki/tips/multiloader)).
+**An advanced, modular, and highly personalizable text effect system for Minecraft.**
 
-## Features
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/6NmpSmZ-qAE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-* Single codebase for Fabric, NeoForge, and Forge
-* Single codebase for multiple Minecraft versions
-* CI/CD with GitHub Actions for automated builds and releases
-* Separate build scripts for each platform
+## 📖 Description
 
-## Getting Started
+**Text Styles** is a powerful refactor and expansion of the original text effects concept. It introduces a robust, registry-based system that allows for deeply personalizable text animations using simple tags. Whether you're writing in a book, on a sign, or just chatting, you can now add movement, color cycles, and unique reveal animations to your text.
 
-### Prerequisites
+Unlike other simple effect mods, **Text Styles** is designed for compatibility and extensibility, allowing other mods to register their own styles and parameters easily.
 
-* Knowledge of Fabric, NeoForge, and/or Forge
-* Suitable IDE
-* Java 25 or higher
-* Git
+## 🌟 Features
 
-### Initial Setup
+- **Registry-Based System**: Every style is a registered object, making it easy to extend and maintain.
+- **Deeply Personalizable**: Almost every aspect of an effect (speed, distance, frequency, etc.) can be adjusted via tag parameters.
+- **Short Aliases**: Support for short tag names and parameter aliases (e.g., `<wb d=5>` instead of `<wobble distance=5>`), perfect for space-constrained areas like books and signs.
+- **Minecraft Native Integration**: Styles are serialized using Codecs, ensuring they work perfectly with Minecraft's text system, NBT, and JSON.
+- **Rich Animation Library**: Over 15 built-in styles including Wave, Rainbow, Glitch, Typewriter, and more.
+- **Per-Glyph Rendering**: Advanced rendering that allows for smooth gradients and per-character animations.
 
-#### 1. **Clone or use this template**
+## ⚙️ Compatibility
 
-```bash
-git clone https://github.com/rotgruengelb/stonecutter-mod-template.git
-cd stonecutter-mod-template
-```
+- **Minecraft Versions**:
+  - Fully compatible with **26+**.
+- **Modding Platforms**:
+  - **Fabric**: ✅ Fully supported!
+  - **NeoForge**: Soon!
+- **Mod Compatibility**:
+  - Works with any mod that uses standard Minecraft Components.
 
-#### 2. **Open in your IDE**
+## 📦 Installation
 
-Import the project as a Gradle project
-in your preferred IDE (e.g., IntelliJ IDEA, Eclipse).
+1. **Download the mod**: Grab the latest version from [GitHub](https://github.com/RazorPlay01/Text-Styles) or your favorite mod hosting site.
+2. **Install Fabric or NeoForge**: Ensure you have Fabric Loader or Neoforge Loader installed for your Minecraft version.
+3. **Add the mod**: Place the `.jar` file into the `mods` folder of your Minecraft instance.
+4. **Launch the game**: Start Minecraft and start experimenting with styles!
 
-#### 3. **Stonecutter IntelliJ plugin**
+## 💡 How to Use
 
-The IntelliJ plugin adds comment syntax highlighting and completion,
-a button to switch the active version, alongside other utilities.
+Simply wrap your text in tags like `<style_name params>your text</style_name>`. You can use full names or short aliases.
 
-#### 4. **Configure your mod**
+### ✅ Vanilla Formatting Support
 
-Edit `stonecutter.properties.toml` to set your mod's metadata:
+You can now use **all official Minecraft formatting codes** inside the `< >` system:
 
-| Property           | Description                                  | Example                                                           |
-|--------------------|----------------------------------------------|-------------------------------------------------------------------|
-| `mod.id`           | Your mod's identifier (lowercase, no spaces) | `modtemplate`                                                     |
-| `mod.name`         | Display name of your mod                     | `Mod Template`                                                    |
-| `mod.group`        | Java package group                           | `com.example`                                                     |
-| `mod.version`      | Mod version number                           | `0.1.0`                                                           |
-| `mod.channel_tag`  | Optional release channel tag                 | `-alpha.0`                                                        |
-| `mod.authors`      | Name of the author(s), as a TOML array       | `["AuthorName"]`                                                  |
-| `mod.contributors` | Contributor names, as a TOML array           | `["ContributorName", "AnotherContributorName"]`                   |
-| `mod.license.name` | License type                                 | `MIT`                                                             |
-| `mod.description`  | Short mod description                        | `Example Description`                                             |
-| `mod.sources_url`  | Link to your source code repository          | `https://github.com/rotgruengelb/stonecutter-mod-template`        |
-| `mod.homepage_url` | Mod homepage or info page                    | `https://github.com/rotgruengelb/stonecutter-mod-template`        |
-| `mod.issues_url`   | Link to issue tracker                        | `https://github.com/rotgruengelb/stonecutter-mod-template/issues` |
-| `mod.discord_url`  | Link to a Discord invite                     | `https://discord.gg/aunYJB4wz9`                                   |
+#### **Colors**
+- `<red>`, `<blue>`, `<gold>`, `<green>`, `<aqua>`, `<yellow>`, `<white>`, etc.
+- `<dark_red>`, `<dark_blue>`, `<light_purple>`, etc.
+- Legacy codes: `<§c>`, `<§4>`, `<§e>`, `<§l>`, etc.
+- **Hex colors**: `<#ff0000>`, `<#00ffaa>`, `<#ffffff>`
 
-Dependencies and properties that are specific to a version/loader
-are defined in `stonecutter.properties.toml` under their respective `[loader."version"]` table,
-e.g. `[fabric."1.21.7"]`.
+#### **Styles**
+- `<bold>` or `<b>` → **Negrita**
+- `<italic>` or `<i>` → *Cursiva*
+- `<underline>` or `<u>` → Subrayado
+- `<strikethrough>` or `<s>` → Tachado
+- `<obfuscated>` or `<k>` → Ofuscado
+- `<reset>` or `<r>` → Resetear formato
 
-#### 5. **Rename package structure**
+### 🛠️ Available Styles & Parameters
 
-Rename the `com.example.modtemplate` package in
-`src/main/java/` to match your `mod.group` and `mod.id`.
+| Style | Alias | Parameters (Full / Short) | Description |
+| :--- | :--- | :--- | :--- |
+| **Wobble** | `wb` | `distance`/`d`, `speed`/`s` | Vertical bobbing motion. |
+| **Shake** | `sh` | `x`, `y`, `frequency`/`f` | Random jittery movement. |
+| **Wave** | `wv` | `amplitude`/`a`, `frequency`/`f`, `speed`/`s`, `vertical`/`v` | Fluid wave-like motion. |
+| **Rainbow** | `rb` | `speed`/`s`, `frequency`/`f`, `saturation`/`sat`, `brightness`/`bri` | Cycles through HSB colors. |
+| **Bounce** | `bn` | `amplitude`/`a`, `speed`/`s`, `delay`/`dl` | Jumping/bouncing effect. |
+| **Pulse** | `pl` | `intensity`/`i`, `speed`/`s`, `delay`/`dl`, `color`/`c` | Pulses in scale and color. |
+| **Fade** | `fd` | `min_alpha`/`m`, `max_alpha`/`x`, `speed`/`s`, `delay`/`dl` | Fades in and out. |
+| **Swing** | `sw` | `amplitude`/`a`, `speed`/`s`, `delay`/`dl` | Pendulum-like rotation. |
+| **Glitch** | `gl` | `intensity`/`i`, `frequency`/`f` | Random offsets and color flashes. |
+| **Turbulence** | `tb` | `intensity`/`i`, `speed`/`s` | Erratic but smooth movement. |
+| **Gradient** | `gr` | `color1`/`c1`, `color2`/`c2`, `speed`/`s`, `frequency`/`f` | Smooth transition between two colors. |
+| **Typewriter** | `tw` | `delay`/`dl`, `land`/`l`, `snap`/`sn` | Reveals characters one by one. |
+| **Marquee** | `mq` | `min`/`m`, `max`/`x`, `vertical`/`v` | Scrolling marquee effect. |
+| **Shadow** | `sd` | `color`/`c`, `x`, `y` | Custom offset shadow. |
+| **Show After** | `sa` | `delay`/`dl` | Hides text for a set duration. |
 
-#### 6. **Update resource files**
+### 🔍 Showcase Command
 
-Rename these files to match your `mod.id`:
+You can see all these effects in action in-game by running:
+`/textstyles showcase`
 
-* `src/main/resources/modtemplate.mixins.json`
+## 🛠️ Contributing & Feedback
 
-Replace `src/main/resources/assets/icon.png` and `.idea/icon.png` with your mod's icon.
+Contributions, ideas, and bug reports are always welcome!
+- Found a bug? Report it on our [GitHub](https://github.com/RazorPlay01/Text-Styles/issues).
+- Want to contribute? Feel free to fork the project and submit a pull request.
 
-## Development
+## 📄 License
 
-### Stonecutter
+This mod is licensed under the **MIT License**.
 
-[Stonecutter](https://stonecutter.kikugie.dev/) allows multiple Minecraft versions and loaders in a single codebase.
-Configure Stonecutter in `stonecutter.gradle.kts` and `settings.gradle.kts`.
+## ❤️ Acknowledgments
 
-Example of platform-specific code using Stonecutter comments:
-
-```java
-//? fabric {
-fabricOnlyCode();
-//?} else {
-/*neoforgeOnlyCode();*/
-//?}
-```
-
-Version-specific code works similarly:
-
-```java
-//? 1.21.7 {
-LOGGER.info("hello 1.21.7!");
-//?} else {
-/*LOGGER.info("hello from any other version!");
- *///?}
-```
-
-For more details, read the [Stonecutter documentation](https://stonecutter.kikugie.dev/wiki/).
-
-### Access Wideners/Transformers
-
-* Fabric Access Wideners: `src/main/resources/aw/*.accesswidener` (one per supported Minecraft version)
-* (Neo)Forge Access Transformers: `src/main/resources/aw/*.cfg` (one per supported Minecraft version)
-
-### Running in Development
-
-The Gradle plugins of the respective platform should provide run configurations.
-If not, you can run the server and client with the respective Gradle tasks.
-Be careful to run the correct task for the selected Stonecutter platform and Minecraft version.
-
-### Platform Abstraction
-
-The template uses a platform abstraction pattern to keep shared code loader-agnostic:
-
-* **Shared code** goes in `com.example.modtemplate` (no platform dependencies)
-* **Platform-specific code** goes in `com.example.modtemplate.platform.{fabric|neoforge|forge}`
-* The `Platform` interface provides loader-specific functionality to shared code
-
-### Adding Dependencies
-
-To add dependencies for a specific platform, modify the `platform` block in the respective `build.gradle.kts` file.
-The declared dependencies are automatically added to the metadata file for the loader and when publishing the mod to
-mod hosting platforms.
-**Important:** This does not replace the `dependencies` block!
-
-```kotlin
-platform {
-  loader = "fabric-m" // or "neoforge" / "forge" / "fabric-o" for old minecraft versions that require loom-remap 
-  dependencies {
-    required("my-lib") {
-      slug("my-lib") // Mod hosting platform slug (here the slug is the same on both Modrinth and CurseForge)
-      versionRange = ">=${prop("deps.my-lib")}" // version range (for fabric.mod.json)
-      forgeVersionRange =
-        "[${prop("deps.my-lib")},)" // version range (for neoforge mods.toml), uses Maven version range syntax
-    }
-  }
-}
-```
-
-### Data Generation
-
-Run Fabric data generation to create recipes, tags, and other data:
-
-```bash
-./gradlew :1.21.7-fabric:runDatagen
-```
-
-Generated files appear in `versions/datagen/{mc_version}/src/main/generated/`.
-The current setup uses Fabric data generation for all platforms to keep everything consistent.
-
-### Environment Variables
-
-Copy `.env.template` to `.env` and fill in the values for local publishing. The `.env` file is loaded automatically by
-the `dotenv-gradle` plugin. When using the CI, set the corresponding repository secrets and variables instead
-(see [Using the CI](#using-the-ci)).
-
-Note: When using the CI `MOD_IS_RELEASE` is managed automatically, it is set by the CI based on the workflow trigger and
-does not need to be set manually.
-
-| Variable                      | Description                                                                | CI type  |
-|-------------------------------|----------------------------------------------------------------------------|----------|
-| `PUB_DRY_RUN`                 | Set to `true` to simulate publishing without actually uploading            | Variable |
-| `PUB_MODS_ENABLE`             | Set to `true` to enable publishing to Modrinth and CurseForge              | Variable |
-| `PUB_MAVEN_ENABLE`            | Set to `true` to enable Maven publishing                                   | Variable |
-| `PUB_MAVEN_CENTRAL_ENABLE`    | Set to `true` to publish to Maven Central                                  | Variable |
-| `PUB_MAVEN_CENTRAL_SNAPSHOTS` | Set to `true` to also publish snapshot versions to Maven Central           | Variable |
-| `PUB_MODRINTH_STAGING`        | Set to `true` to publish to the Modrinth staging API instead of production | Variable |
-| `PUB_MODRINTH_PROJECT_ID`     | Your Modrinth project ID                                                   | Variable |
-| `PUB_CURSEFORGE_PROJECT_ID`   | Your CurseForge project ID                                                 | Variable |
-| `PUB_GITHUB_RELEASES`         | Set to `true` to publish GitHub releases on tag push (CI only!)            | Variable |
-| `PUB_MODRINTH_TOKEN`          | Your Modrinth personal access token                                        | Secret   |
-| `PUB_CURSEFORGE_TOKEN`        | Your CurseForge API token                                                  | Secret   |
-| `PUB_MAVEN_CENTRAL_USERNAME`  | Your Maven Central (Sonatype) username                                     | Secret   |
-| `PUB_MAVEN_CENTRAL_PASSWORD`  | Your Maven Central (Sonatype) password                                     | Secret   |
-| `PUB_SIGNING_KEY`             | ASCII-armored PGP private key for artifact signing                         | Secret   |
-| `PUB_SIGNING_ID`              | PGP key ID                                                                 | Secret   |
-| `PUB_SIGNING_PASSWORD`        | Passphrase for the PGP signing key                                         | Secret   |
-
-### Using the CI
-
-The template includes two GitHub Actions workflows.
-
-**`build.yml`** runs on every push and pull request. It builds all versions and uploads the jars as artifacts. No
-configuration needed beyond having a working build.
-
-**`release.yml`** runs when a tag is pushed. It validates that the tag matches `mod.version` + `mod.channel_tag` in
-`stonecutter.properties.toml`, builds all versions, generates a changelog via [`git-cliff`](https://git-cliff.org/), and
-then publishes to
-whichever platforms you have enabled.
-
-To set up the CI for publishing:
-
-1. Go to your repository on GitHub and open **Settings > Secrets and variables > Actions**.
-2. Under **Secrets**, add any credentials you need (tokens, signing key, Maven credentials).
-3. Under **Variables**, add the toggles and IDs for your platforms. At minimum, you likely want:
-   <br/>`PUB_MODS_ENABLE = true`
-   <br/>`PUB_GITHUB_RELEASES = true`
-   <br/>`PUB_MODRINTH_PROJECT_ID = <your id>`
-   <br/>`PUB_CURSEFORGE_PROJECT_ID = <your id>`
-
-4. To trigger a release, make sure `mod.version` and `mod.channel_tag` in `stonecutter.properties.toml` reflect the
-   version you want to release, then push a tag that matches the combined value:
-   ```bash
-   git tag 0.1.0-alpha.2
-   git push origin 0.1.0-alpha.2
-   ```
-   If the tag does not match the version in the properties file the workflow will delete the tag and fail early without
-   building.
-
-## Dependency Updates with Renovate
-
-The file `renovate.json.example` contains a minimal [Renovate](https://docs.renovatebot.com/) configuration.
-If you want automated dependency update PRs, rename it to `renovate.json` and enable the Renovate GitHub App on your
-repository. The default config (`config:recommended`) is enough to get started.
-
-## Resources and Links
-
-- [Stonecutter Documentation](https://stonecutter.kikugie.dev/wiki/)
-- [NeoForge Documentation](https://docs.neoforged.net/docs/gettingstarted/)
-- [Fabric Documentation](https://docs.fabricmc.net/develop/)
-- [Pre-commit](https://pre-commit.com/)
-- [Git Source Control](https://git-scm.com/doc)
-- [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
-- [Semantic Versioning](https://semver.org/)
-  - [How to denote a pre-release version](https://semver.org/#spec-item-9)
-- [Your Modrinth PAT](https://modrinth.com/settings/pats)
-- [Your CurseForge API Tokens](https://legacy.curseforge.com/account/api-tokens)
-- [GitHub Actions Documentation](https://docs.github.com/en/actions)
-- [Gradle Documentation](https://docs.gradle.org/current/userguide/userguide.html)
-- [Git Cliff (Automatic Changelogs)](https://git-cliff.org/)
-
-### Help and Support
-
-For help and support, consider the following places:
-
-- ["Kiku's Realm" Discord Server](https://discord.kikugie.dev/) for Stonecutter-related questions.
-- ["Cascading Colors" (My) Discord Server](https://discord.gg/aunYJB4wz9) for questions about this template and its
-  setup.
-- ["The NeoForge Project" Discord Server](https://github.com/neoforged) for NeoForge-related questions.
-- ["The Fabric Project" Discord Server](https://discord.gg/v6v4pMv) for Fabric-related questions.
-
-## License/Credits
-
-This template is provided under the MIT License.
-Check `LICENSE` for details.
-
-* Based on [murderspagurder/mod-template-java](https://github.com/murderspagurder/mod-template-java)
-  * Adapted from [KikuGie's Elytra Trims](https://github.com/kikugie/elytra-trims) setup
-* Uses [Stonecutter](https://stonecutter.kikugie.dev/) by KikuGie
+**Text Styles** was created by **[RazorPlay01]** to bring more expressiveness to Minecraft's text. Thank you for using the mod! If you enjoy it, please consider leaving a star on the repository!

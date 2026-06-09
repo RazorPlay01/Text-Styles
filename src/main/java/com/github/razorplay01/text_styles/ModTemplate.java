@@ -18,7 +18,7 @@ import com.github.razorplay01.text_styles.platform.fabric.FabricPlatform;
 public class ModTemplate {
 
 	public static final String MOD_ID = /*$ mod_id*/ "text_styles";
-	public static final String MOD_VERSION = /*$ mod_version*/ "1.2.2";
+	public static final String MOD_VERSION = /*$ mod_version*/ "1.3.0";
 	public static final String MOD_FRIENDLY_NAME = /*$ mod_name*/ "Text Styles";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
