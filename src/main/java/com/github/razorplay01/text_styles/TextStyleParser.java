@@ -202,7 +202,9 @@ public final class TextStyleParser {
 			try {
 				int color = Integer.parseInt(hex.substring(1), 16);
 				return Style.EMPTY.withColor(color);
-			} catch (Exception ignored) {}
+			} catch (Exception ignored) {
+				// []
+			}
 		}
 
 		// Nombres completos

@@ -1,3 +1,7 @@
+/**
+ * Licence LGPL see: {@code text_effects LICENSE}
+ **/
+
 package com.github.razorplay01.text_styles.mixin;
 
 import com.github.razorplay01.text_styles.styles.TextStyle;
@@ -38,41 +42,41 @@ public abstract class StyleMixin implements StyleExtension {
 
 	@Shadow
 	@Final
-	/*? > 1.21.11 || <=1.16.5 >>*/private TextColor color;
+			/*? > 1.21.11 || <=1.16.5 >>*/ private TextColor color;
 	//? >1.21.3 {
 	@Shadow
 	@Final
-	//? > 1.21.11 >>
+			//? > 1.21.11 >>
 	private Integer shadowColor;
 	//? }
 	@Shadow
 	@Final
-	/*? > 1.21.11 || <=1.16.5 >>*/private Boolean bold;
+			/*? > 1.21.11 || <=1.16.5 >>*/ private Boolean bold;
 	@Shadow
 	@Final
-	/*? > 1.21.11 || <=1.16.5 >>*/private Boolean italic;
+			/*? > 1.21.11 || <=1.16.5 >>*/ private Boolean italic;
 	@Shadow
 	@Final
-	/*? > 1.21.11 || <=1.16.5 >>*/private Boolean underlined;
+			/*? > 1.21.11 || <=1.16.5 >>*/ private Boolean underlined;
 	@Shadow
 	@Final
-	/*? > 1.21.11 || <=1.16.5 >>*/private Boolean strikethrough;
+			/*? > 1.21.11 || <=1.16.5 >>*/ private Boolean strikethrough;
 	@Shadow
 	@Final
-	/*? > 1.21.11 || <=1.16.5 >>*/private Boolean obfuscated;
+			/*? > 1.21.11 || <=1.16.5 >>*/ private Boolean obfuscated;
 	@Shadow
 	@Final
-	/*? > 1.21.11 || <=1.16.5 >>*/private ClickEvent clickEvent;
+			/*? > 1.21.11 || <=1.16.5 >>*/ private ClickEvent clickEvent;
 	@Shadow
 	@Final
-	/*? > 1.21.11 || <=1.16.5 >>*/private HoverEvent hoverEvent;
+			/*? > 1.21.11 || <=1.16.5 >>*/ private HoverEvent hoverEvent;
 	@Shadow
 	@Final
-	/*? > 1.21.11 || <=1.16.5 >>*/private String insertion;
+			/*? > 1.21.11 || <=1.16.5 >>*/ private String insertion;
 
 	@Shadow
 	@Final
-	/*? > 1.21.11 || <=1.16.5 >>*/private /*? >= 1.21.10 {*/ net.minecraft.network.chat.FontDescription/*? } else {*/ /*/^? >= 1.21.11 {^/ Identifier /^?} else { ^/ /^ResourceLocation ^//^?} ^/ *//*? }*/ font;
+			/*? > 1.21.11 || <=1.16.5 >>*/ private /*? >= 1.21.10 {*/ net.minecraft.network.chat.FontDescription/*? } else {*/ /*/^? >= 1.21.11 {^/ Identifier /^?} else { ^/ /^ResourceLocation ^//^?} ^/ *//*? }*/ font;
 	@Unique
 	private List<TextStyle.TextStyleInstance> textStyles = null;
 
