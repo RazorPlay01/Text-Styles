@@ -4,7 +4,6 @@ import org.joml.Matrix4f;
 
 /**
  * Transform utility for text effects.
- * Reimplemented independently. Inspired by owlsys/text-effects (LGPL).
  */
 public interface Transform {
 

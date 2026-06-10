@@ -91,11 +91,11 @@ public final class TextStyles {
         return ModTemplate.id(path);
     }
 
-	//? <=1.21.3 && >1.17.1 {
+	//? <=1.21.3 {
 	/*private static <E> Codec<List<E>> compactListCodec(Codec<E> codec) {
 		//noinspection SequencedCollectionMethodCanBeUsed
 		return Codec.either(codec.listOf(), codec)
-				.xmap(either -> either.map(list -> list, List::of), list -> list.size() == 1 ? Either.right(list.get(0)) : Either.left(list));
+				.xmap(either -> either.map(list -> list, List::of), list -> list.size() == 1 ? com.mojang.datafixers.util.Either.right(list.get(0)) : com.mojang.datafixers.util.Either.left(list));
 	}
 	*///? }
 

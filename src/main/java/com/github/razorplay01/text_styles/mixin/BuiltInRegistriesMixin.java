@@ -15,18 +15,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BuiltInRegistries.class)
 public abstract class BuiltInRegistriesMixin {
-    @Shadow
-    @Final
-    private static WritableRegistry<WritableRegistry<?>> WRITABLE_REGISTRY;
+	@Shadow
+	@Final
+	private static WritableRegistry<WritableRegistry<?>> WRITABLE_REGISTRY;
 
-    @SuppressWarnings("unchecked")
-    @Inject(method = "bootStrap", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/registries/BuiltInRegistries;freeze()V"))
-    private static void bootstrapRegistry(CallbackInfo ci) {
-        WRITABLE_REGISTRY.register((ResourceKey<WritableRegistry<?>>) TextStyles.REGISTRY.key(), TextStyles.REGISTRY, RegistrationInfo.BUILT_IN);
-    }
+	@SuppressWarnings("unchecked")
+	@Inject(method = "bootStrap", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/registries/BuiltInRegistries;freeze()V"))
+	private static void bootstrapRegistry(CallbackInfo ci) {
+		WRITABLE_REGISTRY.register((ResourceKey<WritableRegistry<?>>) (Object) TextStyles.REGISTRY.key(), TextStyles.REGISTRY, RegistrationInfo.BUILT_IN);
+	}
 
-    @Inject(method = "freeze", at = @At("TAIL"))
-    private static void freezeRegistry(CallbackInfo ci) {
-        TextStyles.REGISTRY.freeze();
-    }
+	@Inject(method = "freeze", at = @At("TAIL"))
+	private static void freezeRegistry(CallbackInfo ci) {
+		TextStyles.REGISTRY.freeze();
+	}
 }

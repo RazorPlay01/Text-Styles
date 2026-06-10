@@ -2,6 +2,7 @@ package com.github.razorplay01.text_styles.mixin;
 
 import com.github.razorplay01.text_styles.ModTemplate;
 import com.github.razorplay01.text_styles.TextStyles;
+import com.github.razorplay01.text_styles.styles.TextStyle;
 import com.github.razorplay01.text_styles.util.StyleExtension;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -17,6 +18,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.function.Function;
 
 @Mixin(Style.Serializer.class)
@@ -26,22 +28,18 @@ public abstract class StyleSerializerMixin {
 		return original.call(builder).mapResult(new MapCodec.ResultFunction<>() {
 
 			@Override
-			public <T> DataResult<Style> apply(DynamicOps<T> ops, MapLike<T> input, DataResult<Style> a) {
+			public <T> DataResult<Style> apply(DynamicOps<T> ops, MapLike<T> input, DataResult<Style> styleDataResult) {
 				var list = input.get(ModTemplate.MOD_ID);
-				if (list == null) return a;
-				return a.flatMap(style -> {
-					var result = TextStyles.LIST_CODEC.decode(ops, list);
-					return result.map(pair -> ((StyleExtension) (Object) style).withStyles(pair.getFirst()));
-				});
+				if (list == null) return styleDataResult;
+				return styleDataResult.flatMap(style -> TextStyles.LIST_CODEC.decode(ops, list).map(pair -> ((StyleExtension) (Object) style).withStyles(pair.getFirst())));
 			}
 
 			@Override
-			public <T> RecordBuilder<T> coApply(DynamicOps<T> ops, Style input, RecordBuilder<T> t) {
-				var styles = ((StyleExtension) (Object) input).getStyles();
-				if (styles != null && !styles.isEmpty()) {
-					return t.add(ModTemplate.MOD_ID, TextStyles.LIST_CODEC.encodeStart(ops, new ArrayList<>(styles)));
-				}
-				return t;
+			public <T> RecordBuilder<T> coApply(DynamicOps<T> ops, Style input, RecordBuilder<T> resultBuilder) {
+				Collection<TextStyle.TextStyleInstance> styles = ((StyleExtension) (Object) input).getStyles();
+				if (styles != null && !styles.isEmpty())
+					return resultBuilder.add(ModTemplate.MOD_ID, TextStyles.LIST_CODEC.encodeStart(ops, new ArrayList<>(styles)));
+				return resultBuilder;
 			}
 		});
 	}

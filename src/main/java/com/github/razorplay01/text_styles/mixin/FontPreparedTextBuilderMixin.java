@@ -1,11 +1,8 @@
-/**
- * Licence LGPL see: {@code text_effects LICENSE}
- **/
 package com.github.razorplay01.text_styles.mixin;
 
-import com.github.razorplay01.text_styles.TextTransformWrapper;
 import com.github.razorplay01.text_styles.styles.TextStyle;
 import com.github.razorplay01.text_styles.util.StyleExtension;
+import com.github.razorplay01.text_styles.util.StyleProcessor;
 import com.github.razorplay01.text_styles.util.Transform;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -22,18 +19,18 @@ import java.util.Collection;
 
 //? >=1.21.10 {
 import net.minecraft.client.gui.font.TextRenderable;
- //? }
+		//? }
 
 //? >1.21.3 {
 @Mixin(Font.PreparedTextBuilder.class)
- //? } elif >1.15.2 {
+//? } elif <1.21.3 {
 /*@Mixin(Font.StringRenderOutput.class)
-*///? }
+ *///? }
 public abstract class FontPreparedTextBuilderMixin {
 
 	//? <=1.21.1 {
-	/*@Shadow
-	@Final
+	/*@org.spongepowered.asm.mixin.Shadow
+	@org.spongepowered.asm.mixin.Final
 	private boolean dropShadow;
 
 	private static int packColor(float r, float g, float b) {
@@ -53,13 +50,13 @@ public abstract class FontPreparedTextBuilderMixin {
 	*///? }
 
 	//? >= 1.21.11 {
-    @WrapOperation(method = "accept(ILnet/minecraft/network/chat/Style;Lnet/minecraft/client/gui/font/glyphs/BakedGlyph;)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/font/glyphs/BakedGlyph;createGlyph(FFIILnet/minecraft/network/chat/Style;FF)Lnet/minecraft/client/gui/font/TextRenderable$Styled;"))
+	@WrapOperation(method = "accept(ILnet/minecraft/network/chat/Style;Lnet/minecraft/client/gui/font/glyphs/BakedGlyph;)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/font/glyphs/BakedGlyph;createGlyph(FFIILnet/minecraft/network/chat/Style;FF)Lnet/minecraft/client/gui/font/TextRenderable$Styled;"))
 	private TextRenderable.Styled applyOffsets(BakedGlyph instance, float x, float y, int textColor, int shadowColor, Style style, float boldOffset, float shadowOffset, Operation<TextRenderable.Styled> original, @Local(argsOnly = true, name = "position") int position) {
-	//? }
-	//? <=1.21.1 {
+		//? }
+		//? <=1.21.1 {
 	/*@WrapOperation(method = "accept", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Font;renderChar(Lnet/minecraft/client/gui/font/glyphs/BakedGlyph;ZZFFFLorg/joml/Matrix4f;Lcom/mojang/blaze3d/vertex/VertexConsumer;FFFFI)V"))
-	private void applyOffsets(Font instance, BakedGlyph bakedGlyph, boolean bold, boolean italic, float boldOffset, float x, float y, Matrix4f matrix4f, VertexConsumer
-			consumer, float r, float g, float b, float a, int light, Operation<Void> original, @Local(argsOnly = true, ordinal = 0) int position, @Local(argsOnly = true) Style style, @Local GlyphInfo info) {
+	private void applyOffsets(Font instance, BakedGlyph bakedGlyph, boolean bold, boolean italic, float boldOffset, float x, float y, Matrix4f matrix4f, com.mojang.blaze3d.vertex.VertexConsumer
+			consumer, float r, float g, float b, float a, int light, Operation<Void> original, @Local(argsOnly = true, ordinal = 0) int position, @Local(argsOnly = true) Style style, @Local com.mojang.blaze3d.font.GlyphInfo info) {
 		*///? }
 
 		@Nullable Collection<TextStyle.TextStyleInstance> textStyles = ((StyleExtension) (Object) style).getStyles();
@@ -68,7 +65,7 @@ public abstract class FontPreparedTextBuilderMixin {
 		boolean hide = false;
 		//? >1.21.1{
 		int currentColor = textColor;
-		 //?}
+		//?}
 
 		if (textStyles != null && !textStyles.isEmpty()) {
 			//? <=1.21.1 {
@@ -76,30 +73,31 @@ public abstract class FontPreparedTextBuilderMixin {
 			float originalG = g;
 			float originalB = b;
 			*///? }
-			boolean start = position == 0;
+			boolean isFirstCharacter = position == 0;
 			transformMatrix = new Matrix4f();
 			//? >1.21.1{
-			Transform.Impl transform = new Transform.Impl(transformMatrix ,textColor);
-			 //?}
+			Transform.Impl transform = new Transform.Impl(transformMatrix, textColor);
+			//?}
 			//? <=1.21.1{
 			/*Transform.Impl transform = new Transform.Impl(transformMatrix, packColor(r, g, b));
-			*///?}
-			for (TextStyle.TextStyleInstance effect : textStyles) {
-				if (effect.shouldHide(start)) {
-					hide = true;
-					break;
-				}
-				effect.applyEffect(transform, start, x);
-			}
+			 *///?}
+			StyleProcessor.StyleApplicationResult result = StyleProcessor.process(
+					textStyles,
+					transform,
+					isFirstCharacter,
+					x
+			);
+
+			hide = result.shouldHide();
 
 			// Apply color and alpha from transform
 			//? >1.21.1{
-            currentColor = transform.getColor();
-            float alpha = transform.getAlpha();
-            if (alpha < 1.0f) {
-                int s = (int) (((currentColor >> 24) & 0xFF) * alpha);
-                currentColor = (currentColor & 0xFFFFFF) | (s << 24);
-            }
+			currentColor = transform.getColor();
+			float alpha = transform.getAlpha();
+			if (alpha < 1.0f) {
+				int s = (int) (((currentColor >> 24) & 0xFF) * alpha);
+				currentColor = (currentColor & 0xFFFFFF) | (s << 24);
+			}
 			//?}
 			//? <=1.21.1{
 			/*int currentColor = transform.getColor();
@@ -118,8 +116,8 @@ public abstract class FontPreparedTextBuilderMixin {
 
 		//? > 1.21.8 {
 		TextRenderable/*? >1.21.10 >>*/.Styled org = original.call(instance, x, y, currentColor, shadowColor, style, boldOffset, shadowOffset);
-		return hide || org == null ? null : new TextTransformWrapper(org, transformMatrix);
-		 //? }
+		return hide || org == null ? null : new com.github.razorplay01.text_styles.TextTransformWrapper(org, transformMatrix);
+		//? }
 		//? <=1.21.1 {
 		/*if (!hide) {
 			if (transformMatrix != null) matrix4f = transformMatrix.mul(matrix4f);
