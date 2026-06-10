@@ -1,6 +1,3 @@
-/**
- * Licence LGPL see: {@code text_effects LICENSE}
- **/
 package com.github.razorplay01.text_styles.mixin;
 
 import com.github.razorplay01.text_styles.styles.TextStyle;

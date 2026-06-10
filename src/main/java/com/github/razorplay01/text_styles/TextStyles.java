@@ -22,6 +22,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.Lifecycle;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
+import net.minecraft.core.WritableRegistry;
 import net.minecraft.resources./*? >= 1.21.11 {*/ Identifier /*?} else { */ /*ResourceLocation *//*?} */;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.ExtraCodecs;
@@ -49,7 +50,7 @@ public final class TextStyles {
 
     public static final /*? >= 1.21.11 {*/ Identifier /*?} else { */ /*ResourceLocation *//*?} */ REGISTRY_ID = ModTemplate.id("text_styles");
     public static final ResourceKey<Registry<TextStyle>> REGISTRY_KEY = ResourceKey.createRegistryKey(REGISTRY_ID);
-    public static final Registry<TextStyle> REGISTRY = new MappedRegistry<>(REGISTRY_KEY, Lifecycle.stable());
+    public static final WritableRegistry<TextStyle> REGISTRY = new MappedRegistry<>(REGISTRY_KEY, Lifecycle.stable());
 
     public static void init() {
 		ModTemplate.LOGGER.info("Initializing TextStyles!");

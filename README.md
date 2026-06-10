@@ -98,4 +98,3 @@ This mod is licensed under the **MIT License**.
 ## ❤️ Acknowledgments
 
 **Text Styles** was created by **[RazorPlay01]** to bring more expressiveness to Minecraft's text. Thank you for using the mod! If you enjoy it, please consider leaving a star on the repository!
-Thanks also to the **Text Effects** team for allowing me to maintain the MIT license

@@ -22,8 +22,7 @@ public abstract class BuiltInRegistriesMixin {
     @SuppressWarnings("unchecked")
     @Inject(method = "bootStrap", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/registries/BuiltInRegistries;freeze()V"))
     private static void bootstrapRegistry(CallbackInfo ci) {
-        var registry = (WritableRegistry<TextStyle>) TextStyles.REGISTRY;
-        WRITABLE_REGISTRY.register((ResourceKey<WritableRegistry<?>>) (Object) registry.key(), registry, RegistrationInfo.BUILT_IN);
+        WRITABLE_REGISTRY.register((ResourceKey<WritableRegistry<?>>) TextStyles.REGISTRY.key(), TextStyles.REGISTRY, RegistrationInfo.BUILT_IN);
     }
 
     @Inject(method = "freeze", at = @At("TAIL"))

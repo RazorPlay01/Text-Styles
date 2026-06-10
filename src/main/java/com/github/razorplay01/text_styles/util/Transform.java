@@ -2,18 +2,9 @@ package com.github.razorplay01.text_styles.util;
 
 import org.joml.Matrix4f;
 
-@SuppressWarnings("unused")
 public interface Transform {
 
-    default void translate(float t) {
-        translate(t, t);
-    }
-
     void translate(float x, float y);
-
-    default void scale(float s) {
-        scale(s, s);
-    }
 
     void scale(float x, float y);
 
@@ -24,10 +15,6 @@ public interface Transform {
     }
 
     void rotate(float ang);
-
-    default void rotateDegrees(float deg) {
-        rotate((float) Math.toRadians(deg));
-    }
 
     default void rotateAround(float ang, float pX, float pY) {
         translate(pX, pY);
