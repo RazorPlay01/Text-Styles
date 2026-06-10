@@ -46,8 +46,8 @@ public class SwingStyle extends TextStyle {
         }
 
         @Override
-        public void apply(Transform transform, boolean start, float advance) {
-            long time = TextStyles.getTimeMs();
+        public void applyEffect(Transform transform, boolean start, float advance) {
+            long time = TextStyles.currentTimeMillis();
             float angle = Mth.sin(time * speed + advance * delay) * amplitude;
             transform.rotateAround((float) Math.toRadians(angle), 4, 8);
         }

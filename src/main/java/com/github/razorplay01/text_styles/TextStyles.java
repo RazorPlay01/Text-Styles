@@ -17,7 +17,6 @@ import com.github.razorplay01.text_styles.styles.TurbulenceStyle;
 import com.github.razorplay01.text_styles.styles.TypewriterStyle;
 import com.github.razorplay01.text_styles.styles.WaveStyle;
 import com.github.razorplay01.text_styles.styles.WobbleStyle;
-import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Lifecycle;
 import net.minecraft.core.MappedRegistry;
@@ -103,33 +102,26 @@ public final class TextStyles {
     /**
      * Utility to get the current time in milliseconds.
      */
-    public static long getTimeMs() {
+    public static long currentTimeMillis() {
         return Util.getMillis();
     }
 
     /**
      * Generates an array of integers representing a looped range.
      */
-    public static int[] rangeLoop(int min, int max) {
-        int dist = Math.abs(max - min);
-        if (dist == 0) return new int[]{min};
+	public static int[] rangeLoop(int min, int max) {
+		int dist = Math.abs(max - min);
+		if (dist == 0) return new int[]{min};
 
-        if (min > max) {
-            int i = min;
-            min = max;
-            max = i;
-        }
+		int a = Math.min(min, max);
+		int[] arr = new int[dist * 2];
 
-        int[] arr = new int[dist * 2];
-        for (int i = 0; i < arr.length; i++) {
-            if (i < dist) {
-                arr[i] = min + i;
-            } else {
-                arr[i] = max - (i - dist);
-            }
-        }
-        return arr;
-    }
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = a + Math.min(i, dist * 2 - 1 - i);
+		}
+
+		return arr;
+	}
 
     /**
      * Helper to parse parameters from a string.

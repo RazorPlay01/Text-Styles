@@ -52,8 +52,8 @@ public class WaveStyle extends TextStyle {
         }
 
         @Override
-        public void apply(Transform transform, boolean start, float advance) {
-            long time = TextStyles.getTimeMs();
+        public void applyEffect(Transform transform, boolean start, float advance) {
+            long time = TextStyles.currentTimeMillis();
             float offset = Mth.sin(time * speed + advance * frequency) * amplitude;
 
             if (vertical) {

@@ -47,10 +47,10 @@ public class TypewriterStyle extends TextStyle {
 		}
 
 		@Override
-		public boolean getHidden(boolean start) {
+		public boolean shouldHide(boolean start) {
 			if (this.animationFinished) return false;
 
-			long currentTime = TextStyles.getTimeMs();
+			long currentTime = TextStyles.currentTimeMillis();
 
 			if (start) {
 				if (this.allowedVisibleChars > this.currentRenderPos) {
@@ -74,11 +74,11 @@ public class TypewriterStyle extends TextStyle {
 		}
 
 		@Override
-		public void apply(Transform transform, boolean start, float advance) {
+		public void applyEffect(Transform transform, boolean start, float advance) {
 			if (this.animationFinished) return;
 
 			if (this.currentRenderPos == this.allowedVisibleChars) {
-				float timePassed = TextStyles.getTimeMs() - this.lastRevealTime;
+				float timePassed = TextStyles.currentTimeMillis() - this.lastRevealTime;
 				float progress = 1.0F - (timePassed / this.delay);
 
 				if (this.landDistance != 0.0F) {

@@ -50,8 +50,8 @@ public class FadeStyle extends TextStyle {
         }
 
         @Override
-        public void apply(Transform transform, boolean start, float advance) {
-            long time = TextStyles.getTimeMs();
+        public void applyEffect(Transform transform, boolean start, float advance) {
+            long time = TextStyles.currentTimeMillis();
             float alphaRange = (maxAlpha - minAlpha) / 2.0f;
             float midAlpha = (maxAlpha + minAlpha) / 2.0f;
             float alpha = midAlpha + Mth.sin(time * speed + advance * delay) * alphaRange;

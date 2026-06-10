@@ -1,21 +1,21 @@
+/**
+ * Licence LGPL see: {@code text_effects LICENSE}
+ **/
 package com.github.razorplay01.text_styles.mixin;
 
+import com.github.razorplay01.text_styles.TextTransformWrapper;
 import com.github.razorplay01.text_styles.styles.TextStyle;
 import com.github.razorplay01.text_styles.util.StyleExtension;
 import com.github.razorplay01.text_styles.util.Transform;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.mojang.blaze3d.font.GlyphInfo;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.font.glyphs.BakedGlyph;
 import net.minecraft.network.chat.Style;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Collection;
@@ -79,17 +79,17 @@ public abstract class FontPreparedTextBuilderMixin {
 			boolean start = position == 0;
 			transformMatrix = new Matrix4f();
 			//? >1.21.1{
-			Transform.TransformImpl transform = new Transform.TransformImpl(transformMatrix ,textColor);
+			Transform.Impl transform = new Transform.Impl(transformMatrix ,textColor);
 			 //?}
 			//? <=1.21.1{
-			/*Transform.TransformImpl transform = new Transform.TransformImpl(transformMatrix, packColor(r, g, b));
+			/*Transform.Impl transform = new Transform.Impl(transformMatrix, packColor(r, g, b));
 			*///?}
 			for (TextStyle.TextStyleInstance effect : textStyles) {
-				if (effect.getHidden(start)) {
+				if (effect.shouldHide(start)) {
 					hide = true;
 					break;
 				}
-				effect.apply(transform, start, x);
+				effect.applyEffect(transform, start, x);
 			}
 
 			// Apply color and alpha from transform
@@ -118,7 +118,7 @@ public abstract class FontPreparedTextBuilderMixin {
 
 		//? > 1.21.8 {
 		TextRenderable/*? >1.21.10 >>*/.Styled org = original.call(instance, x, y, currentColor, shadowColor, style, boldOffset, shadowOffset);
-		return hide || org == null ? null : new com.github.razorplay01.text_styles.WrappedTextRenderable(org, transformMatrix);
+		return hide || org == null ? null : new TextTransformWrapper(org, transformMatrix);
 		 //? }
 		//? <=1.21.1 {
 		/*if (!hide) {

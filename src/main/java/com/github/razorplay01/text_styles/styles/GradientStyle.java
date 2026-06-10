@@ -50,8 +50,8 @@ public class GradientStyle extends TextStyle {
         }
 
         @Override
-        public void apply(Transform transform, boolean start, float x) {
-            long time = TextStyles.getTimeMs();
+        public void applyEffect(Transform transform, boolean start, float x) {
+            long time = TextStyles.currentTimeMillis();
             // Use absolute x position for smooth gradient across characters
             float t = (Mth.sin((time * speed) + (x * frequency)) + 1.0f) / 2.0f;
 

@@ -53,8 +53,8 @@ public class RainbowStyle extends TextStyle {
         }
 
         @Override
-        public void apply(Transform transform, boolean start, float x) {
-            long time = TextStyles.getTimeMs();
+        public void applyEffect(Transform transform, boolean start, float x) {
+            long time = TextStyles.currentTimeMillis();
             // x is the absolute horizontal position
             float hue = ((time * speed) + (x * frequency)) % 1.0f;
             if (hue < 0) hue += 1.0f;

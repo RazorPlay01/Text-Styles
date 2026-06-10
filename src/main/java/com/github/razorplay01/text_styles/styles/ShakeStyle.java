@@ -52,8 +52,8 @@ public class ShakeStyle extends TextStyle {
         }
 
         @Override
-        public void apply(Transform transform, boolean start, float advance) {
-            if ((TextStyles.getTimeMs() / 50) % frequency == 0) {
+        public void applyEffect(Transform transform, boolean start, float advance) {
+            if ((TextStyles.currentTimeMillis() / 50) % frequency == 0) {
                 transform.translate(
                         (random.nextFloat() - 0.5f) * 2 * xDistance,
                         (random.nextFloat() - 0.5f) * 2 * yDistance

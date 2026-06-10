@@ -52,12 +52,12 @@ public class PulseStyle extends TextStyle {
         }
 
         @Override
-        public void apply(Transform transform, boolean start, float advance) {
-            long time = TextStyles.getTimeMs();
+        public void applyEffect(Transform transform, boolean start, float advance) {
+            long time = TextStyles.currentTimeMillis();
             float t = (Mth.sin(time * speed + advance * delay) + 1.0f) / 2.0f;
 
             float scale = 1.0f + (t * intensity);
-            transform.scaleAt(scale, scale, 4, 4);
+            transform.scaleAround(scale, scale, 4, 4);
 
             if (pulseColor != -1) {
                 int originalColor = transform.getColor();

@@ -47,8 +47,8 @@ public class MarqueeStyle extends TextStyle {
         }
 
         @Override
-        public void apply(Transform transform, boolean start, float advance) {
-            int offset = offsets[(int) (TextStyles.getTimeMs() % 300 / 300f * offsets.length)];
+        public void applyEffect(Transform transform, boolean start, float advance) {
+            int offset = offsets[(int) (TextStyles.currentTimeMillis() % 300 / 300f * offsets.length)];
             if (vertical) {
                 transform.translate(0, offset);
             } else {

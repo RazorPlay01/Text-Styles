@@ -44,7 +44,7 @@ public class ShadowStyle extends TextStyle {
         }
 
         @Override
-        public void apply(Transform transform, boolean start, float advance) {
+        public void applyEffect(Transform transform, boolean start, float advance) {
             transform.translate(offsetX, offsetY);
         }
     }

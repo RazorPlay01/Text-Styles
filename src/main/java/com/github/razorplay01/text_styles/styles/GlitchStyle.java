@@ -43,8 +43,8 @@ public class GlitchStyle extends TextStyle {
         }
 
         @Override
-        public void apply(Transform transform, boolean start, float advance) {
-            long time = TextStyles.getTimeMs();
+        public void applyEffect(Transform transform, boolean start, float advance) {
+            long time = TextStyles.currentTimeMillis();
             if ((time / 50) % frequency == 0) {
                 if (random.nextFloat() < 0.3f) {
                     transform.translate(

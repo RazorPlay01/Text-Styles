@@ -44,8 +44,8 @@ public class TurbulenceStyle extends TextStyle {
         }
 
         @Override
-        public void apply(Transform transform, boolean start, float advance) {
-            long time = TextStyles.getTimeMs();
+        public void applyEffect(Transform transform, boolean start, float advance) {
+            long time = TextStyles.currentTimeMillis();
             float seed = time * speed + advance;
             float ox = (Mth.sin(seed * 0.7f) + Mth.sin(seed * 1.3f)) * intensity;
             float oy = (Mth.cos(seed * 0.9f) + Mth.cos(seed * 1.1f)) * intensity;

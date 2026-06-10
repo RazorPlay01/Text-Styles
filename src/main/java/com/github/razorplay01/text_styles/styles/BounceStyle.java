@@ -46,8 +46,8 @@ public class BounceStyle extends TextStyle {
         }
 
         @Override
-        public void apply(Transform transform, boolean start, float advance) {
-            long time = TextStyles.getTimeMs();
+        public void applyEffect(Transform transform, boolean start, float advance) {
+            long time = TextStyles.currentTimeMillis();
             float bounce = Math.abs(Mth.sin(time * speed + advance * delay)) * amplitude;
             transform.translate(0, -bounce);
         }

@@ -12,7 +12,7 @@ public class VanillaStyleInstance extends TextStyle.TextStyleInstance {
 	}
 
 	@Override
-	public void apply(Transform transform, boolean start, float advance) {
+	public void applyEffect(Transform transform, boolean start, float advance) {
 		// Los estilos vanilla no transforman glyphs
 	}
 

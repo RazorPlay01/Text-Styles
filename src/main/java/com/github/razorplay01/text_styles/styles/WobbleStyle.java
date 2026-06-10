@@ -5,7 +5,6 @@ import com.github.razorplay01.text_styles.util.Transform;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import org.apache.commons.lang3.mutable.MutableInt;
 
 import java.util.Map;
 
@@ -46,13 +45,13 @@ public class WobbleStyle extends TextStyle {
 		}
 
 		@Override
-		public void apply(Transform transform, boolean start, float advance) {
+		public void applyEffect(Transform transform, boolean start, float advance) {
 			if (this.offsets.length == 0) {
 				return;
 			}
 
 			if (start || this.position < 0) {
-				long now = TextStyles.getTimeMs();
+				long now = TextStyles.currentTimeMillis();
 				float cycleProgress = (now % this.speed) / (float) this.speed;
 				this.position = (int) (cycleProgress * this.offsets.length);
 				if (this.position >= this.offsets.length) {

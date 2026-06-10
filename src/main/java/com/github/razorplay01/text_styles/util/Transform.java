@@ -2,77 +2,90 @@ package com.github.razorplay01.text_styles.util;
 
 import org.joml.Matrix4f;
 
+/**
+ * Transform utility for text effects.
+ * Reimplemented independently. Inspired by owlsys/text-effects (LGPL).
+ */
 public interface Transform {
 
-    void translate(float x, float y);
+	void translate(float x, float y);
 
-    void scale(float x, float y);
+	void scale(float x, float y);
 
-    default void scaleAt(float scaleX, float scaleY, float pX, float pY) {
-        translate(pX, pY);
-        scale(scaleX, scaleY);
-        translate(-pX, -pY);
-    }
+	/**
+	 * Scale around a pivot point.
+	 */
+	default void scaleAround(float scaleX, float scaleY, float pivotX, float pivotY) {
+		translate(pivotX, pivotY);
+		scale(scaleX, scaleY);
+		translate(-pivotX, -pivotY);
+	}
 
-    void rotate(float ang);
+	void rotate(float angle);
 
-    default void rotateAround(float ang, float pX, float pY) {
-        translate(pX, pY);
-        rotate(ang);
-        translate(-pX, -pY);
-    }
+	/**
+	 * Rotate around a pivot point.
+	 */
+	default void rotateAround(float angle, float pivotX, float pivotY) {
+		translate(pivotX, pivotY);
+		rotate(angle);
+		translate(-pivotX, -pivotY);
+	}
 
-    void setColor(int color);
+	void setColor(int color);
 
-    int getColor();
+	int getColor();
 
-    void setAlpha(float alpha);
+	void setAlpha(float alpha);
 
-    float getAlpha();
+	float getAlpha();
 
-    class TransformImpl implements Transform {
-        public final Matrix4f matrix;
-        private int color;
-        private float alpha = 1.0f;
+	/**
+	 * Default implementation.
+	 */
+	class Impl implements Transform {
+		private final Matrix4f matrix;
+		private int color;
+		private float alpha = 1.0f;
 
-        public TransformImpl(Matrix4f matrix, int color) {
-            this.matrix = matrix;
-            this.color = color;
-        }
+		public Impl(Matrix4f matrix, int initialColor) {
+			this.matrix = matrix;
+			this.color = initialColor;
+		}
 
-        @Override
-        public void translate(float x, float y) {
-            matrix.translate(x, y, 0);
-        }
+		@Override
+		public void translate(float x, float y) {
+			matrix.translate(x, y, 0.0f);
+		}
 
-        @Override
-        public void scale(float x, float y) {
-            matrix.scale(x, y, 1);
-        }
+		@Override
+		public void scale(float x, float y) {
+			matrix.scale(x, y, 1.0f);
+		}
 
-        @Override
-        public void rotate(float ang) {
-            matrix.rotate(ang, 0, 0, 1);
-        }
+		@Override
+		public void rotate(float angle) {
+			matrix.rotateZ(angle);
+		}
 
-        @Override
-        public void setColor(int color) {
-            this.color = color;
-        }
+		@Override
+		public void setColor(int color) {
+			this.color = color;
+		}
 
-        @Override
-        public int getColor() {
-            return color;
-        }
+		@Override
+		public int getColor() {
+			return color;
+		}
 
-        @Override
-        public void setAlpha(float alpha) {
-            this.alpha = alpha;
-        }
+		@Override
+		public void setAlpha(float alpha) {
+			this.alpha = alpha;
+		}
 
-        @Override
-        public float getAlpha() {
-            return alpha;
-        }
-    }
+		@Override
+		public float getAlpha() {
+			return alpha;
+		}
+	}
 }

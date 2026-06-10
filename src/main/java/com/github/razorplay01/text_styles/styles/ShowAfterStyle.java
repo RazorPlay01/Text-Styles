@@ -31,15 +31,15 @@ public class ShowAfterStyle extends TextStyle {
 		public ShowAfterInstance(TextStyle type, int delay) {
 			super(type);
 			this.delay = delay;
-			this.creationTime = TextStyles.getTimeMs();
+			this.creationTime = TextStyles.currentTimeMillis();
 			this.revealed = false;
 		}
 
 		@Override
-		public boolean getHidden(boolean start) {
+		public boolean shouldHide(boolean start) {
 			if (this.revealed) return false;
 
-			if (start && (TextStyles.getTimeMs() - this.creationTime > this.delay)) {
+			if (start && (TextStyles.currentTimeMillis() - this.creationTime > this.delay)) {
 				this.revealed = true;
 			}
 

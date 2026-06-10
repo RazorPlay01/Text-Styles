@@ -4,6 +4,7 @@ import com.github.razorplay01.text_styles.util.Transform;
 import com.mojang.serialization.MapCodec;
 import java.util.Map;
 
+// Inspired by owlsys/text-effects but reimplemented
 /**
  * Represents a type of text style effect.
  * This class is registered in the text style registry.
@@ -45,7 +46,7 @@ public abstract class TextStyle {
          * @param start     Whether this is the first glyph of a continuous string.
          * @param advance   The horizontal advance of this glyph.
          */
-        public void apply(Transform transform, boolean start, float advance) {
+        public void applyEffect(Transform transform, boolean start, float advance) {
         }
 
         /**
@@ -54,7 +55,7 @@ public abstract class TextStyle {
          * @param start Whether this is the first glyph of a continuous string.
          * @return True if the glyph should be hidden, false otherwise.
          */
-        public boolean getHidden(boolean start) {
+        public boolean shouldHide(boolean start) {
             return false;
         }
     }
