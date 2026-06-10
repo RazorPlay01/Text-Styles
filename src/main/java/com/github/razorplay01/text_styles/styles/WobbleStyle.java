@@ -31,28 +31,41 @@ public class WobbleStyle extends TextStyle {
         return codec;
     }
 
-    public static class WobbleInstance extends TextStyleInstance {
-        protected final int distance;
-        protected final int speed;
-        private final int[] offsets;
-        private final MutableInt index = new MutableInt(-1);
+	public static class WobbleInstance extends TextStyleInstance {
+		protected final int distance;
+		protected final int speed;
+		private final int[] offsets;
+		private int position;
 
-        public WobbleInstance(TextStyle type, int distance, int speed) {
-            super(type);
-            this.distance = distance;
-            this.speed = Math.max(1, speed);
-            this.offsets = TextStyles.rangeLoop(-distance, distance);
-        }
+		public WobbleInstance(TextStyle type, int distance, int speed) {
+			super(type);
+			this.distance = distance;
+			this.speed = Math.max(1, speed);
+			this.offsets = TextStyles.rangeLoop(-distance, distance);
+			this.position = -1;
+		}
 
-        @Override
-        public void apply(Transform transform, boolean start, float advance) {
-            int i = index.intValue();
-            if (start || i == -1) {
-                i = (int) (TextStyles.getTimeMs() % speed / (float) speed * offsets.length);
-            }
-            int offset = offsets[Math.min(i, offsets.length - 1)];
-            index.setValue((i + 1) % offsets.length);
-            transform.translate(0, offset);
-        }
-    }
+		@Override
+		public void apply(Transform transform, boolean start, float advance) {
+			if (this.offsets.length == 0) {
+				return;
+			}
+
+			if (start || this.position < 0) {
+				long now = TextStyles.getTimeMs();
+				float cycleProgress = (now % this.speed) / (float) this.speed;
+				this.position = (int) (cycleProgress * this.offsets.length);
+				if (this.position >= this.offsets.length) {
+					this.position = this.offsets.length - 1;
+				}
+			}
+
+			transform.translate(0, this.offsets[this.position]);
+
+			this.position++;
+			if (this.position >= this.offsets.length) {
+				this.position = 0;
+			}
+		}
+	}
 }

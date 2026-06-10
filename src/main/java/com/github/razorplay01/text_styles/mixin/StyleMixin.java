@@ -1,7 +1,3 @@
-/**
- * Licence LGPL see: {@code text_effects LICENSE}
- **/
-
 package com.github.razorplay01.text_styles.mixin;
 
 import com.github.razorplay01.text_styles.styles.TextStyle;
@@ -148,7 +144,7 @@ public abstract class StyleMixin implements StyleExtension {
 	}
 
 	@ModifyReturnValue(method = {"applyFormats", "applyFormat", "applyLegacyFormat"}, at = @At("TAIL"))
-	private Style includeEffectsInApplyFormats(Style original) {
+	private Style includeStyleInApplyFormats(Style original) {
 		((StyleMixin) (Object) original).setTextStyles(textStyles);
 		return original;
 	}
@@ -162,7 +158,7 @@ public abstract class StyleMixin implements StyleExtension {
 			"withStrikethrough", "withUnderlined"}, at = @At(value =
 			"INVOKE", target = "Lnet/minecraft/network/chat/Style;checkEmptyAfterChange(Lnet/minecraft/network/chat/Style;Ljava/lang/Object;Ljava/lang/Object;)Lnet/minecraft/network/chat/Style;"
 	))
-	private Style includeEffectsInWith(Style newStyle) {
+	private Style includeStyleInWith(Style newStyle) {
 		((StyleMixin) (Object) newStyle).setTextStyles(textStyles);
 		return newStyle;
 	}
