@@ -84,7 +84,7 @@ public abstract class StyleMixin implements StyleExtension {
 	@Definition(id = "bold", field = "Lnet/minecraft/network/chat/Style;bold:Ljava/lang/Boolean;")
 	@Expression("this.bold == ?")
 	@WrapOperation(method = "equals", at = @At(value = "MIXINEXTRAS:EXPRESSION"))
-	private boolean includeEffectsInEquals(Object left, Object right, Operation<Boolean> original, @Local(name = "style") Style style) {
+	private boolean includeEffectsInEquals(Object left, Object right, Operation<Boolean> original, @Local Style style) {
 		return original.call(left, right) && Objects.equals(((StyleExtension) (Object) style).getStyles(), textStyles);
 	}
 
