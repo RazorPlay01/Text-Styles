@@ -46,40 +46,59 @@ public final class TextStyleParser {
         try {
             MutableComponent root = Component.empty();
             Deque<Style> styleStack = new ArrayDeque<>();
+            Deque<String> tagStack = new ArrayDeque<>();
             styleStack.push(Style.EMPTY);
 
             Matcher matcher = TAG_PATTERN.matcher(text);
             int lastEnd = 0;
 
             while (matcher.find()) {
-                if (matcher.start() > lastEnd) {
-                    String plain = text.substring(lastEnd, matcher.start());
-                    root.append(MutableComponent.create(PlainTextContents.create(plain))
-                            .withStyle(styleStack.peek()));
-                }
-
                 String tag = matcher.group(1);
                 String params = matcher.group(2);
                 String closing = matcher.group(3);
 
-				if (tag != null) {
-					TextStyle.TextStyleInstance instance = getStyleInstance(tag, params);
-					Style current = styleStack.peek();
-					Style newStyle = current;
+                if (tag != null) {
+                    // Etiqueta de apertura: solo se consume si corresponde a un estilo 100% valido.
+                    TextStyle.TextStyleInstance instance = getStyleInstance(tag, params);
+                    if (instance != null) {
+                        // El texto anterior a la etiqueta se agrega con el estilo actual.
+                        if (matcher.start() > lastEnd) {
+                            String plain = text.substring(lastEnd, matcher.start());
+                            root.append(MutableComponent.create(PlainTextContents.create(plain))
+                                    .withStyle(styleStack.peek()));
+                        }
 
-					if (instance != null) {
-						if (instance instanceof VanillaStyleInstance v) {
-							newStyle = current.applyTo(v.getVanillaStyle());
-						} else {
-							newStyle = ((StyleExtension) (Object) current).withStyle(instance);
-						}
-					}
-					styleStack.push(newStyle);
-				} else if (closing != null && styleStack.size() > 1) {
-                    styleStack.pop();
+                        Style current = styleStack.peek();
+                        Style newStyle = current;
+
+                        if (instance instanceof VanillaStyleInstance v) {
+                            newStyle = current.applyTo(v.getVanillaStyle());
+                        } else {
+                            newStyle = ((StyleExtension) (Object) current).withStyle(instance);
+                        }
+
+                        styleStack.push(newStyle);
+                        tagStack.push(tag);
+                        lastEnd = matcher.end();
+                    }
+                } else if (closing != null && !tagStack.isEmpty()) {
+                    // Etiqueta de cierre: solo se consume si empareja con una apertura valida activa.
+                    if (tagStack.peek().equalsIgnoreCase(closing)) {
+                        // El texto interno se agrega con el estilo activo (aun con el efecto).
+                        if (matcher.start() > lastEnd) {
+                            String plain = text.substring(lastEnd, matcher.start());
+                            root.append(MutableComponent.create(PlainTextContents.create(plain))
+                                    .withStyle(styleStack.peek()));
+                        }
+
+                        tagStack.pop();
+                        if (styleStack.size() > 1) {
+                            styleStack.pop();
+                        }
+                        lastEnd = matcher.end();
+                    }
                 }
-
-                lastEnd = matcher.end();
+                // Si la etiqueta no es valida, NO se consume: el '<...>' literal queda como parte del texto.
             }
 
             if (lastEnd < text.length()) {
