@@ -25,7 +25,7 @@ public final class TextStyleParser {
 
 
     private static final Pattern TAG_PATTERN = Pattern.compile(
-            "<([a-zA-Z0-9_]+)(?:\\s+([^>]+))?>|</([a-zA-Z0-9_]+)>",
+            "<([a-zA-Z0-9_#]+)(?:\\s+([^>]+))?>|</([a-zA-Z0-9_]+)>",
             Pattern.CASE_INSENSITIVE
     );
 
